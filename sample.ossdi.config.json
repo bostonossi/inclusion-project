@@ -1,0 +1,11 @@
+{   "GitHub": {
+    "apikey": "insert your GitHub api key here"
+},
+    "Ossdi": {
+        "host": "insert host address",
+        "name": "insert name",
+        "pass": "insert password",
+        "port": "insert port",
+        "user": "insert user"
+     }
+}
