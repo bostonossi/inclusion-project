@@ -1,43 +1,10 @@
 import json
-import pandas as pd
 import requests
 from sqlalchemy import *
 from enum import Enum
-from bossdi_db import *
-from sqlalchemy.orm import sessionmaker
-from github import Github
+from ossdi_collector import *
 
-
-import json
-
-with open('ossdi.config.json') as config_file:
-    confidg_data = json.load(config_file)
-
-class OSSDI_Collector:
-    """
-    a class for getting metrics from the GitHub API
-    """
-    def __init__(self, api_key):
-        """
-        Creates a new GitHub instance
-        
-        : param api_key: GitHub API key
-        """
-        self.GITHUB_API_KEY = confidg_data['GitHub']['apikey']
-        self.api = Github(api_key)
-        self.bossdi_db = Bossdi(user = confidg_data['Ossdi']['user'], 
-                                password = confidg_data['Ossdi']['pass'],
-                                host = confidg_data['Ossdi']['host'], 
-                                port = confidg_data['Ossdi']['port'], 
-                                dbname = confidg_data['Ossdi']['name'])
-        engine = self.bossdi_db.get_db()
-        Base.metadata.create_all(engine)
-        Session = sessionmaker()
-        Session.configure(bind=engine)
-        self.conn = engine.connect()
-        self.session = Session()
-
-        
+  
 class COC_Statuses(Enum):
     """
     This class enumerates the various potential states of a repository's
