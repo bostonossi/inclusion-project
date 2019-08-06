@@ -10,8 +10,8 @@ class COC_Statuses(Enum):
     This class enumerates the various potential states of a repository's
     code of conduct.
     """
-    GITHUB_DET_NONE = 1
-    GITHUB_DET_YES = 2
+    GH_DETERMINED_NONE = 1
+    GH_DETERMINED_YES = 2
     IN_README = 3
     IN_SEPARATE_FILES = 4
       
@@ -27,10 +27,14 @@ class COC_Collector(OSSDI_Collector):
         exists = self.session.query(self.session.query(COC_State).filter_by\
                                   (state='GitHub_det_None').exists()).scalar()
         if not exists:
-            self.session.add(COC_State(state = 'GitHub_det_None'))
-            self.session.add(COC_State(state = 'GitHub_det_Yes'))
-            self.session.add(COC_State(state = 'in_ReadMe'))
-            self.session.add(COC_State(state = 'in_separate_files'))
+            self.session.add(COC_State(shortName = 'GH_DETERMINED_NONE', \
+                                       prettyName = 'GitHub Determined None'))
+            self.session.add(COC_State(shortName = 'GH_DETERMINED_YES', \
+                                       prettyName = 'GitHub Determined Yes'))
+            self.session.add(COC_State(shortName = 'IN_README', \
+                                       prettyName = 'In Readme'))
+            self.session.add(COC_State(shortName = 'IN_SEPARATE_FILES', \
+                                       prettyName = 'In Separate Files'))
             self.session.commit()
         
 
