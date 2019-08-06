@@ -1,12 +1,12 @@
-from coc_collector import *
+from ossdi_collector import *
 
 class Readme_Statuses(Enum):
     """
     This class enumerates the various potential states of a repository's
     code of conduct.
     """
-    GIT_DET_NONE = 1
-    GIT_DET_YES = 2
+    GH_DETERMINED_NONE = 1
+    GH_DETERMINED_YES = 2
 
 class Readme_Collector(OSSDI_Collector):
     """
@@ -19,8 +19,10 @@ class Readme_Collector(OSSDI_Collector):
         exists = self.session.query(self.session.query(Readme_State).filter_by\
                                   (state='GitHub_det_Yes').exists()).scalar()
         if not exists:
-            self.session.add(Readme_State(state = 'GitHub_det_Yes'))
-            self.session.add(Readme_State(state = 'GitHub_det_No'))
+            self.session.add(Readme_State(shortName = 'GH_DETERMINED_NONE', \
+                                          prettyName = 'GitHub Determined None'))
+            self.session.add(Readme_State(shortName = 'GH_DETERMINED_YES',\
+                                          prettyName = 'GitHub Determined Yes'))
             self.session.commit()
 
     def readme(self, owner, repo):
