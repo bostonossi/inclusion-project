@@ -1,7 +1,6 @@
 from sqlalchemy import *
 import sqlalchemy as s
 
-#from augur import logger
 
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -19,7 +18,6 @@ class Bossdi(object):
         self.DB_STR = 'mysql+pymysql://{}:{}@{}:{}/{}'.format(
             user, password, host, port, dbname
         )
-        #logger.debug('BOSSDI: Connecting to {}:{}/{} as {}'.format(host, port, dbname, user))
         self.db = s.create_engine(self.DB_STR, poolclass=s.pool.NullPool)
         self.projects = projects
 
@@ -31,14 +29,15 @@ class COC_State(Base):
     __tablename__ = 'CODE_CONDUCT_STATE'
     
     id = Column(Integer, primary_key=True)
-    state = Column(String(30), nullable=False)
+    shortName = Column(String(50), nullable=False)
+    prettyName = Column(String(50), nullable=False)
 
 class Readme_State(Base):
     __tablename__ = 'README_STATE'
 
     id = Column(Integer, primary_key=True)
-    state = Column(String(30), nullable=False)
-
+    shortName = Column(String(50), nullable=False)
+    prettyName = Column(String(50), nullable=False)
 
 class Projects(Base):
     __tablename__ = 'PROJECTS'
