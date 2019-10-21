@@ -1,3 +1,4 @@
+import json
 from github import Github
 from sqlalchemy import *
 from bossdi_db import *
@@ -29,3 +30,15 @@ class OSSDI_Collector:
         Session.configure(bind=engine)
         self.conn = engine.connect()
         self.session = Session()
+
+    def get_data(self, owner, repo):
+
+        url = "http://api.github.com/repos/{}/{}/readme".format\
+              (owner, repo)
+        
+        header = {'Accept': 'application/vnd.github.scarlet-witch-preview+json'}
+        
+        json = requests.get(url, auth=('user', self.GITHUB_API_KEY)).json()
+
+        return json 
+

@@ -3,6 +3,7 @@ import requests
 from sqlalchemy import *
 from enum import Enum
 from ossdi_collector import *
+from bossdi_db import COC_State
 
   
 class COC_Statuses(Enum):
@@ -25,7 +26,7 @@ class COC_Collector(OSSDI_Collector):
         super().__init__(api_key)
 
         exists = self.session.query(self.session.query(COC_State).filter_by\
-                                  (state='GitHub_det_None').exists()).scalar()
+                                  (state = 'GitHub_det_None').exists()).scalar()
         if not exists:
             self.session.add(COC_State(shortName = 'GH_DETERMINED_NONE', \
                                        prettyName = 'GitHub Determined None'))
@@ -47,14 +48,17 @@ class COC_Collector(OSSDI_Collector):
         :param repo: The name of the repo
         :return: DataFrame with the result
         """
-        url = "http://api.github.com/repos/{}/{}/community/code_of_conduct".format\
-              (owner, repo)
-        header = {'Accept': 'application/vnd.github.scarlet-witch-preview+json'}
-        json = requests.get(url, auth=('user', self.GITHUB_API_KEY), headers=header).json()
+
+        # url = "http://api.github.com/repos/{}/{}/community/code_of_conduct".format\
+        #        (owner, repo)
+        # header = {'Accept': 'application/vnd.github.scarlet-witch-preview+json'}
+        # json = requests.get(url, auth=('user', self.GITHUB_API_KEY), headers=header).json()
+
+        data = get_data(self, owner, repo)
 
         exists = self.session.query(self.session.query(Projects).filter_by\
                                   (repo_name = repo).exists()).scalar()
-        if json['body'] != None:
+        if data['body'] != None:
             if not exists:
                 self.session.add(Projects(repo_owner = owner, repo_name = repo, code_of_conduct_state = 2))
                 self.session.commit()
@@ -70,3 +74,5 @@ class COC_Collector(OSSDI_Collector):
                 repo_object = self.session.query(Projects).filter_by(repo_name = repo).first()
                 repo_object.code_of_conduct_state = 1
                 self.session.commit()
+
+#COC_Collector(api_key = '7638ba942b41459175c33c3244c612e35674583c').code_of_conduct( owner = 'kubernetes', repo = 'kubernetes')

@@ -35,14 +35,16 @@ class Readme_Collector(OSSDI_Collector):
         :return: DataFrame with the result
         """
         
-        url = "http://api.github.com/repos/{}/{}/readme".format\
-              (owner, repo)
-        json = requests.get(url, auth=('user', self.GITHUB_API_KEY)).json()
+        # url = "http://api.github.com/repos/{}/{}/readme".format\
+        #       (owner, repo)
+        # data = requests.get(url, auth=('user', self.GITHUB_API_KEY)).json()
+
+        data = get_data(self, owner, repo)
 
         exists = self.session.query(self.session.query(Projects).filter_by\
-                                  (repo_name = repo).exists()).scalar()
+                                   (repo_name = repo).exists()).scalar()
 
-        if json['content'] != None:
+        if data['content'] != None:
             if not exists:
                 self.session.add(Projects(repo_owner = owner, repo_name = repo, readme_state = 2))
                 self.session.commit()
