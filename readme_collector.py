@@ -35,11 +35,13 @@ class Readme_Collector(OSSDI_Collector):
         :return: DataFrame with the result
         """
         
-        # url = "http://api.github.com/repos/{}/{}/readme".format\
-        #       (owner, repo)
-        # data = requests.get(url, auth=('user', self.GITHUB_API_KEY)).json()
+        #url = "http://api.github.com/repos/{}/{}/readme".format\
+        #      (owner, repo)
+        #data = requests.get(url, auth=('user', self.GITHUB_API_KEY)).json()
 
-        data = get_data(self, owner, repo)
+
+
+        data = get_data(self, owner, repo) # uses the new function get_data 
 
         exists = self.session.query(self.session.query(Projects).filter_by\
                                    (repo_name = repo).exists()).scalar()

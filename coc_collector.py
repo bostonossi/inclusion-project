@@ -74,5 +74,3 @@ class COC_Collector(OSSDI_Collector):
                 repo_object = self.session.query(Projects).filter_by(repo_name = repo).first()
                 repo_object.code_of_conduct_state = 1
                 self.session.commit()
-
-#COC_Collector(api_key = '7638ba942b41459175c33c3244c612e35674583c').code_of_conduct( owner = 'kubernetes', repo = 'kubernetes')

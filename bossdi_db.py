@@ -29,15 +29,16 @@ class COC_State(Base):
     __tablename__ = 'CODE_CONDUCT_STATE'
     
     id = Column(Integer, primary_key=True)
-    shortName = Column(String(50), nullable=False)
-    prettyName = Column(String(50), nullable=False)
+    state = Column(String(50), nullable=False)
+    # shortName = Column(String(50), nullable=False)
+    # prettyName = Column(String(50), nullable=False)
 
 class Readme_State(Base):
     __tablename__ = 'README_STATE'
 
     id = Column(Integer, primary_key=True)
-    shortName = Column(String(50), nullable=False)
-    prettyName = Column(String(50), nullable=False)
+    # shortName = Column(String(50), nullable=False)
+    # prettyName = Column(String(50), nullable=False)
 
 class Projects(Base):
     __tablename__ = 'PROJECTS'
