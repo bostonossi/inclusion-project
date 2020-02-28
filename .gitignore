@@ -106,3 +106,7 @@ venv.bak/
 # config files
 ossdi.config.json
 .DS_Store
+
+# npm files
+node_modules/
+npm-debug.log
