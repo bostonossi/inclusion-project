@@ -1,0 +1,18 @@
+<!doctype html>
+<title>{% block title %}{% endblock %} - Flaskr</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/patternfly.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/patternfly-addons.css') }}">
+<nav>
+  <h1>BOSSI (navigation here)</h1>
+</nav>
+<section class="content" style="max-width: 1200px; margin:auto;">
+  <header>
+    {% block header %}{% endblock %}
+  </header>
+  {% block content %}{% endblock %}
+</section>
+<footer class="footer">
+    <div>
+        <p>footer links (back to bu, socials, idk)</p>
+    </div>
+</footer>
