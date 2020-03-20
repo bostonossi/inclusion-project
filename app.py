@@ -9,3 +9,7 @@ def hello():
 @app.route("/intake")
 def intake():
     return render_template('intake.html')
+
+
+if __name__ == 'main':
+    app.run()
